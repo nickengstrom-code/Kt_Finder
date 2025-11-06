@@ -18,7 +18,7 @@ The program:
 1. **Reads profilometer data**  
    Accepts `x, y` surface data and roughness parameters (`Ra`, `Ry`, `Rz`) from profilometer software.  
    - If roughness data is missing, these can be internally calculated.  
-   - Note: calculated values depend on the selected leveling type.
+   - Note: Calculated values highly depend on the selected leveling type[3].
 
 2. **Levels the data**  
    Based on user input:
@@ -37,16 +37,18 @@ The program:
    *(Defaults are provided based on optimal values found by the authors.)*
 
 4. **Valley detection**  
-   Identifies valley locations in the profilometer scan and uses a *closing profile* approach ([4]) to find the top **critical valleys** that most contribute to stress concentration and potential failure points.
+   Identifies valley locations in the profilometer scan and uses a *closing profile* approach [4] to find the **critical valleys** that most contribute to stress concentration and potential failure points.
 
 5. **Data smoothing and circle fitting**  
    For each valley:
-   - Applies a **Savitzky–Golay filter** to remove noise without eliminating small valleys.  
+   - Applies a conditional **Savitzky–Golay filter** based on the valley width to remove noise without eliminating small valleys.  
    - Fits a circle to the valley to estimate the **valley radius**.
 
 6. **Kt Calculation**  
-   Combines the input (or calculated) roughness values (`Ra`, `Ry`, `Rz`) with estimated valley radii to compute **Kt** using the **Arola–Ramulu equation**.
-
+   Combines the input (or calculated) roughness values (`Ra`, `Ry`, `Rz`) with estimated valley radii to compute **Kt** using the **Arola–Ramulu equation**(Eq. 1).
+```math
+   \bar{K}_t=1+n (\frac{R_a}{ρ ̅ })(\frac{R_y}{R_z} )                   \qquad \qquad \qquad (1)
+```
 ---
 
 ## How to Use
@@ -59,8 +61,8 @@ Use the provided **Kt Program Data Template** to format your profilometer data c
 - `X` and `Y` in **micrometers (µm)**  
 - File format: **CSV**
 - If you lack roughness values, leave `Ra`, `Ry`, and `Rz` blank.  
-  *(Recommended: use Gaussian smoothing in this case.)*
-
+  *(Recommended: use Gaussian smoothing if you have the program estimate Ra, Ry, Rz.)*
+![Excel Template](https://github.com/nickengstrom-code/Kt_Finder/blob/main/Excel%20Format.png)
 ---
 
 ### 2. Run the Program
@@ -70,6 +72,17 @@ It is recommended to use **Jupyter Notebook** or **Spyder**, though any Python e
 When executed, the program:
 - Opens a **GUI** to select input files and specify parameters.  
 - Parameters are **prefilled with optimal defaults** (based on LPBF surfaces) but can be modified.
+
+![GUI View](https://github.com/nickengstrom-code/Kt_Finder/blob/main/Gui%20Example.png)
+|Variable	|Recommended Range|
+|---|---|
+|Threshold 	|0-1|
+|Profilometer Tip Radius	|Relative to Equipment|
+|Largest Radius of Consideration	|50-250|
+|Width Max	|500-1000|
+|R Ball	|50-250|
+|Number of Deepest Valleys to Highlight	|6-25|
+
 
 ---
 
@@ -82,19 +95,18 @@ The program generates:
 - Estimated **Kt values** for **shear** and **tension** conditions  
 
 It can also optionally produce **circle fit graphs** for each analyzed valley — to visually inspect fit quality.  
-Enable this by setting:
+Enable setting **Generate Circle Fit Graphs** to **Yes**
 
-```python
-Generate_Circle_Fit_Graphs = "Yes"
-```
+
 
 ---
 
 ## Example Output
 
 > Multiple files can be processed consecutively.  
-> Output includes leveled data visualizations, critical valley identification, and estimated Kt results.
-
+> Output includes leveled data visualizations, critical valley identification, and estimated Kt results for shear and tension conditions.
+> 
+![Example Output](https://github.com/nickengstrom-code/Kt_Finder/blob/main/Example%20Output.png)
 ---
 
 ## References
