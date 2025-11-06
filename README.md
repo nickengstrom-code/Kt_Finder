@@ -62,7 +62,7 @@ Use the provided **Kt Program Data Template** to format your profilometer data c
 - File format: **CSV**
 - If you lack roughness values, leave `Ra`, `Ry`, and `Rz` blank.  
   *(Recommended: use Gaussian smoothing if you have the program estimate Ra, Ry, Rz.)*
-![Excel Template](https://github.com/nickengstrom-code/Kt_Finder/blob/main/Excel%20Format.png)
+![Excel Template](https://github.com/nickengstrom-code/Kt_Finder/blob/main/ReadME%20Photos/Excel%20Format.png)
 ---
 
 ### 2. Run the Program
@@ -73,7 +73,7 @@ When executed, the program:
 - Opens a **GUI** to select input files and specify parameters.  
 - Parameters are **prefilled with optimal defaults** (based on LPBF surfaces) but can be modified.
 
-![GUI View](https://github.com/nickengstrom-code/Kt_Finder/blob/main/Gui%20Example.png)
+![GUI View](https://github.com/nickengstrom-code/Kt_Finder/blob/main/ReadME%20Photos/Gui%20Example.png)
 |Variable	|Recommended Range|
 |---|---|
 |Threshold 	|0-1|
@@ -106,7 +106,7 @@ Enable setting **Generate Circle Fit Graphs** to **Yes**
 > Multiple files can be processed consecutively.  
 > Output includes leveled data visualizations, critical valley identification, and estimated Kt results for shear and tension conditions.
 > 
-![Example Output](https://github.com/nickengstrom-code/Kt_Finder/blob/main/Example%20Output.png)
+![Example Output](https://github.com/nickengstrom-code/Kt_Finder/blob/main/ReadME%20Photos/Example%20Output.png?raw=true)
 ---
 
 ## References
